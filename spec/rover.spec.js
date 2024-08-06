@@ -87,7 +87,9 @@ describe('Rover class', () => {
 
     // Send the message and check if the rover's mode changed
     let response = rover.receiveMessage(message);
+
     expect(rover.mode).toEqual('LOW_POWER');
+    expect(response.results[0].completed).toEqual(true);
   });
 
 
@@ -106,7 +108,8 @@ describe('Rover class', () => {
 
     // Send the message and check if the MOVE command was not completed
     let response = rover.receiveMessage(message);
-    expect(response.results[1]).toEqual({ completed: false });
+    expect(response.results[1].completed).toEqual(false);
+    expect(rover.position).toEqual(98382);
   });
 
 
@@ -122,5 +125,6 @@ describe('Rover class', () => {
     // Send the message and check if the rover's position updated
     let response = rover.receiveMessage(message);
     expect(rover.position).toEqual(2000);
+    expect(response.results[0].completed).toEqual(true);
   });
 });
